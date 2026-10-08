@@ -66,3 +66,13 @@ export const topFallers = (products: Product[], n = 6) =>
     .filter((p) => p.change.dir === "down")
     .sort((a, b) => b.change.pct - a.change.pct)
     .slice(0, n);
+export const bnDate = (d: Date = new Date()): string =>
+  d.toLocaleDateString("bn-BD", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
+export const formatAvg = (n: number): string =>
+  toBn(Number.isInteger(n) ? n.toLocaleString("en-US") : n.toFixed(2));
