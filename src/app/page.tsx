@@ -1,31 +1,24 @@
- "use client";
+ import { getProducts } from "@/lib/api";
+import { formatPrice, unitLabel, formatChange, priceSummary, toBn } from "@/lib/bn";
 
-import toast from "react-hot-toast";
+export default async function Home() {
+  const products = await getProducts();
+  const first = products[0];
+  const s = priceSummary(first.markets);
 
-export default function Home() {
-  return (
-    <main className="mx-auto max-w-6xl space-y-4 p-6">
-      <h1 className="text-3xl font-bold text-primary">🛒 বাজার দর</h1>
-      <p>প্রয়োজনীয় পণ্যের দাম এক নজরে। ১২৩৪৫ টাকা</p>
-
-      <div className="flex flex-wrap gap-2">
-        <button className="btn btn-primary" onClick={() => toast.success("সফল হয়েছে!")}>
-          Primary বাটন
-        </button>
-        <button className="btn btn-outline btn-primary">Outline বাটন</button>
-        <button className="btn btn-error" onClick={() => toast.error("কিছু ভুল হয়েছে")}>
-          Error বাটন
-        </button>
-      </div>
-
-      <div className="card bg-base-100 shadow">
-        <div className="card-body">
-          <h2 className="card-title">🍚 মিনিকেট চাল</h2>
-          <p>প্রতি কেজি</p>
-        </div>
-      </div>
-
-      <div className="skeleton h-20 w-full"></div>
-    </main>
-  );
+  return (
+    <main className="mx-auto max-w-6xl space-y-2 p-6">
+     <h1 className="text-2xl font-bold">মোট পণ্য: {toBn(products.length)}টি</h1>
+      <p>
+        {first.image} {first.nameBn} ({unitLabel(first.unit)})
+      </p>
+      <p>
+        আজকের দাম: {formatPrice(first.today)} টাকা {formatChange(first.change)}
+      </p>
+      <p>
+        সর্বনিম্ন {formatPrice(s.min)}, সর্বোচ্চ {formatPrice(s.max)}, গড়{" "}
+        {formatPrice(s.avg)}
+      </p>
+    </main>
+  );
 }
