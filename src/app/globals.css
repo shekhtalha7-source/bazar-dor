@@ -1,54 +1,30 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
-@plugin "daisyui" {
-  themes: false;
-}
-
-@plugin "daisyui/theme" {
-  name: "bazar";
-  default: true;
-  color-scheme: light;
-
-  --color-primary: #15803d;
-  --color-primary-content: #ffffff;
-  --color-secondary: #16a34a;
-  --color-secondary-content: #ffffff;
-  --color-accent: #86efac;
-  --color-accent-content: #14532d;
-  --color-neutral: #1f2937;
-  --color-neutral-content: #ffffff;
-  --color-base-100: #ffffff;
-  --color-base-200: #f0f5f1;
-  --color-base-300: #dfe9e2;
-  --color-base-content: #1f2937;
-  --color-success: #16a34a;
-  --color-error: #dc2626;
-
-  --radius-box: 0.75rem;
-  --radius-field: 0.5rem;
-  --radius-selector: 0.5rem;
-}
-
-@theme inline {
-  --font-sans: var(--font-bangla), system-ui, sans-serif;
+:root {
+  --font-sans: var(--font-bangla);
 }
 
 body {
-  background: var(--color-base-200);
-  font-family: var(--font-bangla), system-ui, sans-serif;
+  background: #f0f5f1;
+  font-family: var(--font-bangla), system-ui, sans-serif;
+}
+
+[data-theme="light"],
+:root {
+  --color-primary: #15803d;
+  --color-primary-content: #ffffff;
+  --color-base-200: #f0f5f1;
+  --color-base-300: #dfe9e2;
 }
 
 @keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 .animate-marquee {
-  animation: marquee 40s linear infinite;
+  animation: marquee 40s linear infinite;
 }
 .animate-marquee:hover {
-  animation-play-state: paused;
+  animation-play-state: paused;
 }
