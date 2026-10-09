@@ -21,11 +21,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="bn" data-theme="bazar">
-      <body className={`${bangla.variable} antialiased`}>
-        <SiteShell>{children}</SiteShell>
-        <Toaster position="top-center" />
-      </body>
-    </html>
-  );
-}
+  <html lang="bn" data-theme="light">
+<body className="{`${bangla.variable} antialiased">
+
+<SiteShell>{children}</SiteShell>
+<Toaster position="top-center"/>
+
+
+</body>
+
+
+</html>
+);
+};
