@@ -4,8 +4,9 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { authClient } from "@/lib/auth-client";
-import { bnDate } from "@/lib/bn";
+
 import type { Category } from "@/lib/types";
+import BnDate from "@/components/BnDate";
 
 export default function Navbar({ categories }: { categories: Category[] }) {
   const pathname = usePathname();
@@ -30,9 +31,7 @@ export default function Navbar({ categories }: { categories: Category[] }) {
           </span>
           <span>
             <span className="block text-lg leading-tight font-bold">বাজার দর</span>
-            <span className="block text-xs text-base-content/60" suppressHydrationWarning>
-              {bnDate()}
-            </span>
+            <BnDate className="block text-xs text-base-content/60" />
           </span>
         </Link>
 

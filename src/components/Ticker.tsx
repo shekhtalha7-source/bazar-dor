@@ -36,4 +36,3 @@ export default function Ticker({ products }: { products: Product[] }) {
   );
 }
 
-export default Ticker;

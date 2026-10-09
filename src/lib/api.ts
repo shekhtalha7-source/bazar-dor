@@ -10,7 +10,7 @@ async function request<T>(path: string): Promise<T> {
   let lastError: unknown;
   for (const base of BASES) {
     try {
-      const res = await fetch(`${base}${path}`, { cache: "no-store" });
+      const res = await fetch(`${base}${path}`, { next: { revalidate: 100 } });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return (await res.json()) as T;
     } catch (err) {
