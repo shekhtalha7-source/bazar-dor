@@ -41,7 +41,7 @@ export default function UserInfo() {
       >
         {user.image ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={user.image} alt="" className="h-8 w-8 rounded-full object-cover" />
+          <img  src={user.image || "/images.png"}  alt=""  referrerPolicy="no-referrer"  className="h-8 w-8 rounded-full object-cover"/>
         ) : (
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm text-primary-content">
             {user.name?.charAt(0)}

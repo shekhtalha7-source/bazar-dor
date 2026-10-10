@@ -22,3 +22,12 @@ body {
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+.btn-primary {
+  background-color: #058a3f;
+  border-color: #058a3f;
+  color: #fff;
+}
+.btn-primary:hover {
+  background-color: #047a37;
+  border-color: #047a37;
+}
