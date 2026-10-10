@@ -1,10 +1,6 @@
 import type { Category, Product } from "./types";
 
-const BASES = [
- "https://openapi.programming-hero.com/api/bazardor",
- "https://api.api-store.workers.dev/api/bazardor",
- "https://api.abcz.workers.dev/api/bazardor",
-];
+const BASES = ["https://openapi.programming-hero.com/api/bazardor"];
 
 // প্রথম URL কাজ না করলে দ্বিতীয়টা চেষ্টা করে
 async function request<T>(path: string): Promise<T> {
