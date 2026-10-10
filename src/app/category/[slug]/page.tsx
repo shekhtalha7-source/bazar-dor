@@ -1,22 +1,30 @@
 import Link from "next/link";
 import { getCategories, getProducts } from "@/lib/api";
-
+import { Suspense } from "react";
+import SortSelect from "@/components/SortSelect";
+import { toBn } from "@/lib/bn";
 import CategoryHeader from "@/components/CategoryHeader";
 
 import ProductCard from "@/components/ProductCard";
 
 export default async function CategoryPage({
-params,
+ params,
+ searchParams,
 }: {
  params: Promise<{ slug: string }>;
+ searchParams: Promise<{ sort?: string }>;
 }) {
  const { slug } = await params;
+ const { sort = "default" } = await searchParams;
 
 const [categories, products] = await Promise.all([
  getCategories(),
  getProducts(slug),
  ]);
  const category = categories.find((c) => c.slug === slug);
+ const sorted = [...products];
+if (sort === "price-asc") sorted.sort((a, b) => a.today - b.today);
+if (sort === "price-desc") sorted.sort((a, b) => b.today - a.today);
 
  if (!category || products.length === 0) {
  return (
@@ -40,9 +48,19 @@ const [categories, products] = await Promise.all([
  name={category.nameBn}
  count={products.length}
 />
+<div className="mb-4 rounded-box border border-base-300 bg-base-100 p-4">
+ <Suspense fallback={null}>
+ <SortSelect />
+ </Suspense>
+</div>
+
+<p className="mb-3 text-sm text-base-content/60">
+ মোট {toBn(sorted.length)}টি পণ্য দেখানো হচ্ছে
+</p>
+
 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "1rem" }}>
- {products.map((p) => (
-<ProductCard key={p.id} product={p} />
+ {sorted.map((p) => (
+ <ProductCard key={p.id} product={p} />
  ))}
 </div>
  

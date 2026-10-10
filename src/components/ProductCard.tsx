@@ -9,7 +9,7 @@ const bg =
 
 return (
  <Link
-href={`/product/${p.slug}`}
+href={`/products/${p.id}`}
  style={{
  display: "block",
  background: "#fff",
