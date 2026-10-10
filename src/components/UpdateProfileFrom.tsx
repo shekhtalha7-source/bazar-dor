@@ -1,53 +1,50 @@
-"use client";
 
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import toast from "react-hot-toast";
-import { authClient } from "@/lib/auth-client";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth";
+import UpdateProfileForm from "@/components/UpdateProfileFrom";
+import SignOutButton from "@/components/SignOutButton";
 
-export default function UpdateProfileForm({ currentName }: { currentName: string }) {
-  const router = useRouter();
-  const [name, setName] = useState(currentName);
-  const [loading, setLoading] = useState(false);
+export default async function ProfilePage() {
+     const session = await auth.api.getSession({ headers: await headers() });
+ if (!session) redirect("/signin");
 
-  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const trimmed = name.trim();
-    if (!trimmed) {
-      toast.error("নাম খালি রাখা যাবে না");
-      return;
-    }
+ const { user } = session;
 
-    setLoading(true);
-    const { error } = await authClient.updateUser({ name: trimmed });
-    setLoading(false);
+ return (
+ <main className="mx-auto max-w-2xl space-y-6 px-4 py-8">
+ <div>
+ <h1 className="text-2xl font-bold">আমার প্রোফাইল</h1>
+ <p className="text-sm text-base-content/60">
+ আপনার অ্যাকাউন্টের তথ্য এখানে দেখুন।
+ </p>
+ </div>
 
-    if (error) {
-      toast.error(error.message || "আপডেট করা যায়নি");
-      return;
-    }
-    toast.success("তথ্য আপডেট হয়েছে");
-    router.push("/profile");
-    router.refresh();
-  };
+ <div className="flex items-center justify-between rounded-2xl border border-base-300 bg-base-100 p-5">
+ <div className="flex items-center gap-4">
+ {user.image ? (
+ // eslint-disable-next-line @next/next/no-img-element
+ <img
+ src={user.image}
+alt={user.name}
+ className="h-16 w-16 rounded-xl object-cover"
+ />
+) : (
+ <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-base-200 text-xl font-bold">
+ {user.name?.[0]?.toUpperCase()}
+ </div>
+)}
+<div>
+ <p className="text-lg font-semibold">{user.name}</p> <p className="text-sm text-base-content/60">{user.email}</p>
+ </div>
+ </div>
+  <SignOutButton />
+ </div>
 
-  return (
-    <form
-      onSubmit={handleSubmit}
-      className="space-y-4 rounded-box border border-base-300 bg-base-100 p-5"
-    >
-      <label className="block">
-        <span className="mb-1 block text-sm">নাম</span>
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="input input-bordered w-full"
-          placeholder="আপনার নাম"
-        />
-      </label>
-      <button type="submit" disabled={loading} className="btn btn-primary w-full">
-        {loading ? "অপেক্ষা করুন..." : "তথ্য আপডেট করুন"}
-      </button>
-    </form>
-  );
+ <div className="rounded-2xl border border-base-300 bg-base-100 p-5">
+ <h2 className="mb-4 font-semibold">তথ্য</h2>
+ <UpdateProfileForm defaultName={user.name ?? ""} />
+</div>
+ </main>
+ );
 }
