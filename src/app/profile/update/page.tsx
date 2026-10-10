@@ -1,7 +1,7 @@
 import Link from "next/link";
-import RedirectToSignIn from "@/components/RedirectToSignIn";
-import UpdateProfileForm from "@/components/UpdateProfileForm";
-import { getSession } from "@/lib/session";
+import RedirectToSignIn from "../../../components/RedirectToSignIn";
+import UpdateProfileForm from "../../../components/UpdateProfileFrom";
+import { getSession } from "../../../lib/session";
 
 export default async function UpdateProfilePage() {
   const session = await getSession();

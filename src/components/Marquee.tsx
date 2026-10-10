@@ -1,17 +1,24 @@
+import Link from "next/link";
+import MarqueeText from "react-marquee-text";
+import "react-marquee-text/dist/styles.css";
 import type { Product } from "@/lib/types";
 import { formatChange, formatPrice, unitShort } from "@/lib/bn";
 
-export default function Ticker({ products }: { products: Product[] }) {
-  if (products.length === 0) return null;
-  const items = [...products, ...products];
+const Marquee = async () => {
+  const res = await fetch(
+    "https://api.api-store.workers.dev/api/bazardor/products",
+    { next: { revalidate: 300 } }
+  );
+  const products: Product[] = await res.json();
 
   return (
-    <div className="overflow-hidden border-y border-base-300 bg-base-100">
-      <div className="flex w-max animate-marquee">
-        {items.map((p, i) => (
-          <div
-            key={`${p.id}-${i}`}
-            className="flex shrink-0 items-center gap-2 border-r border-base-300 px-4 py-2 text-sm whitespace-nowrap"
+    <div className="border-y border-base-300 bg-base-100">
+      <MarqueeText className="py-2 text-sm" direction="left" duration={60}>
+        {products.map((p) => (
+          <Link
+            key={p.id}
+            href={`/product/${p.slug}`}
+            className="mx-4 inline-flex items-center gap-2 hover:underline"
           >
             <span>{p.image}</span>
             <span className="font-medium">{p.nameBn}</span>
@@ -29,10 +36,12 @@ export default function Ticker({ products }: { products: Product[] }) {
             >
               {formatChange(p.change)}
             </span>
-          </div>
+            <span className="ml-4 text-base-content/30">•</span>
+          </Link>
         ))}
-      </div>
+      </MarqueeText>
     </div>
   );
-}
+};
 
+export default Marquee;
