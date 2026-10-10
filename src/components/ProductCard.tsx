@@ -1,37 +1,66 @@
 import Link from "next/link";
 import type { Product } from "@/lib/types";
-import { changeClass, formatChange, formatPrice, unitLabel } from "@/lib/bn";
+import { formatChange, formatPrice, unitLabel } from "@/lib/bn";
 
 export default function ProductCard({ product: p }: { product: Product }) {
-  return (
-    <Link
-      href={`/product/${p.slug}`}
-      className="block rounded-box border border-base-300 bg-base-100 p-4 transition hover:-translate-y-0.5 hover:shadow-md"
-    >
-      <div className="flex items-center gap-3">
-        <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-base-200 text-2xl">
-          {p.image}
-        </span>
-        <div>
-          <h3 className="font-semibold leading-tight">{p.nameBn}</h3>
-          <p className="text-xs text-base-content/60">{unitLabel(p.unit)}</p>
-        </div>
-      </div>
-      <div className="mt-4 flex items-end justify-between">
-        <div>
-          <p className="text-xs text-base-content/60">আজকের দাম</p>
-          <p className="text-xl font-bold">
-            {formatPrice(p.today)} <span className="text-sm font-normal">টাকা</span>
-          </p>
-        </div>
-        <span
-          className={`rounded-full px-2 py-1 text-xs font-semibold ${changeClass(
-            p.change.dir
-          )}`}
-        >
-          {formatChange(p.change)}
-        </span>
-      </div>
-    </Link>
-  );
+ const color =p.change.dir === "up" ? "#dc2626" : p.change.dir === "down" ? "#16a34a" : "#6b7280";
+const bg =
+ p.change.dir === "up" ? "#fee2e2" : p.change.dir === "down" ? "#dcfce7" : "#f3f4f6";
+
+return (
+ <Link
+href={`/product/${p.slug}`}
+ style={{
+ display: "block",
+ background: "#fff",
+ border: "1px solid #dfe9e2",
+ borderRadius: 12,
+ padding: "12px 14px",
+ textDecoration: "none",
+ color: "inherit",
+ }}
+ > <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+ <span
+ style={{
+ width: 38,
+ height: 38,
+ borderRadius: 8,
+ background: "#f0f5f1",
+display: "flex",
+ alignItems: "center",
+ justifyContent: "center",
+ fontSize: 20,
+ }}
+ >
+ {p.image}
+ </span>
+ <div>
+ <div style={{ fontSize: 14, fontWeight: 600, lineHeight: 1.3 }}>{p.nameBn}</div>
+ <div style={{ fontSize: 11, color: "#6b7280" }}>{unitLabel(p.unit)}</div>
+ </div>
+ </div>
+
+<div style={{
+ display: "flex",
+ justifyContent: "space-between",
+ alignItems: "flex-end",
+ marginTop: 10,
+ }}>
+ <div>
+ <div style={{ fontSize: 11, color: "#6b7280" }}>আজকের দাম</div>
+<div style={{ fontSize: 17, fontWeight: 700 }}> {formatPrice(p.today)} <span style={{ fontSize: 12, fontWeight: 400 }}>টাকা</span>
+</div> </div>
+<span
+style={{
+ fontSize: 11,
+ fontWeight: 600,
+padding: "2px 8px", borderRadius: 999,
+ color,
+ background: bg,
+}}
+ >
+ {formatChange(p.change)}
+</span>
+</div>
+ </Link> );
 }
