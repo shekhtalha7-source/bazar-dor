@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Noto_Sans_Bengali } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+import SiteShell from "@/components/SiteShell";
 import "./globals.css";
-
 
 const bangla = Noto_Sans_Bengali({
   subsets: ["bengali", "latin"],
@@ -21,13 +21,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-  <html lang="bn" data-theme="light">
-<body className="{`${bangla.variable} antialiased">
-<Toaster position="top-center"/>
-{children}
-</body>
-
-
-</html>
-);
-};
+    <html lang="bn" data-theme="light">
+      <body className={`${bangla.variable} antialiased`}>
+        <SiteShell>{children}</SiteShell>
+        <Toaster position="top-center" />
+      </body>
+    </html>
+  );
+}
