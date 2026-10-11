@@ -43,5 +43,5 @@ GITHUB_CLIENT_SECRET=
 ```
 ## 🔗 Links
 
-- **Live Link:** (https://bazar-dor-three-ivory.vercel.app)]
-- **GitHub Repository:**
+- **Live Link:** https://bazar-dor-three-ivory.vercel.app
+- **GitHub Repository:** https://github.com/shekhtalha7-source/bazar-dor
