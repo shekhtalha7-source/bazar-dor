@@ -1,17 +1,20 @@
 "use client";
-
+import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { authClient } from "@/lib/auth-client";
 
 export default function SocialButtons() {
- const handleGithub = async () => {
-await authClient.signIn.social({ provider: "github", callbackURL: "/" });
- };
+ 
+    const handleGithub = async () => {
+ const { error } = await authClient.signIn.social({ provider: "github", callbackURL: "/" });
+ if (error) toast.error(error.message || "GitHub লগইন করা যায়নি");
+};
 
- const handleGoogle = async () => {
- await authClient.signIn.social({ provider: "google", callbackURL: "/" });
- };
+const handleGoogle = async () => {
+ const { error } = await authClient.signIn.social({ provider: "google", callbackURL: "/" });
+ if (error) toast.error(error.message || "Google লগইন করা যায়নি");
+};
 
  return (
  <div className="w-full">
