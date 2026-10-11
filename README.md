@@ -41,3 +41,7 @@ BETTER_AUTH_URL=http://localhost:3000
 GITHUB_CLIENT_ID=
 GITHUB_CLIENT_SECRET=
 ```
+## 🔗 Links
+
+- **Live Link:** [[https://bazar-dor-three-ivory.vercel.app](https://bazar-dor-three-ivory.vercel.app)](https://bazar-dor-three-ivory.vercel.app/)
+- **GitHub Repository:** [https://github.com/YOUR_USERNAME/YOUR_REPO_NAME](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME)
